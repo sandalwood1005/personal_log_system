@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}写文章 - 技术博客{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="bi bi-pencil"></i> 创建新文章
+                </h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">文章标题</label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               placeholder="请输入文章标题" required>
+                        <div class="form-text">一个好的标题可以吸引更多读者</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">文章内容</label>
+                        <textarea class="form-control" id="content" name="content" 
+                                  rows="12" placeholder="请输入文章内容" required></textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="category" class="form-label">文章分类</label>
+                                <select class="form-select" id="category" name="category">
+                                    <option value="">-- 选择分类 --</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="tags" class="form-label">文章标签</label>
+                                <input type="text" class="form-control" id="tags" name="tags" 
+                                       placeholder="Python, Flask, 编程 (用逗号分隔)">
+                                <div class="form-text">多个标签用逗号分隔</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg"></i> 发布文章
+                        </button>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-lg"></i> 取消
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

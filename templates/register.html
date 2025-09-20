@@ -39,7 +39,7 @@
                     </button>
                     
                     <div class="text-center">
-                        <p>已有账号？<a href="{{ url_for('login') }}" class="text-decoration-none">立即登录</a></p>
+                        <p>已有账号？<a href="{{ url_for('main.login') }}" class="text-decoration-none">立即登录</a></p>
                     </div>
                 </form>
             </div>
@@ -58,7 +58,7 @@ document.querySelector('form').addEventListener('submit', async function(e) {
     };
     
     try {
-        const response = await fetch('{{ url_for("register") }}', {
+        const response = await fetch('{{ url_for("main.register") }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ document.querySelector('form').addEventListener('submit', async function(e) {
         });
         
         if (response.ok) {
-            window.location.href = '{{ url_for("login") }}';
+            window.location.href = '{{ url_for("main.login") }}';
         } else {
             const data = await response.json();
             alert(data.message || '注册失败，请重试');

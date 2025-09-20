@@ -37,17 +37,17 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">TechBlog</a>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">TechBlog</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}">首页</a>
+                        <a class="nav-link" href="{{ url_for('main.index') }}">首页</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">分类</a>
+                        <a class="nav-link" href="{{ url_for('main.manage_categories') }}">分类管理</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">关于</a>
@@ -56,28 +56,28 @@
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('create_post') }}">
+                        <a class="nav-link" href="{{ url_for('main.create_post') }}">
                             <i class="bi bi-pencil-fill"></i> 写文章
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('profile') }}">
+                        <a class="nav-link" href="{{ url_for('main.profile') }}">
                             <i class="bi bi-person-circle"></i> {{ current_user.username }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">
+                        <a class="nav-link" href="{{ url_for('main.logout') }}">
                             <i class="bi bi-box-arrow-right"></i> 退出
                         </a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">
+                        <a class="nav-link" href="{{ url_for('main.login') }}">
                             <i class="bi bi-box-arrow-in-right"></i> 登录
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">
+                        <a class="nav-link" href="{{ url_for('main.register') }}">
                             <i class="bi bi-person-plus"></i> 注册
                         </a>
                     </li>
@@ -98,8 +98,6 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
-
         {% block content %}{% endblock %}
     </div>
 

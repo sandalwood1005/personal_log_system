@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}分类管理 - 技术博客{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title mb-0">
+                    <i class="bi bi-bookmark"></i> 分类管理
+                </h3>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="bi bi-plus"></i> 添加分类
+                </button>
+            </div>
+            <div class="card-body">
+                {% if categories %}
+                    <div class="list-group">
+                        {% for category in categories %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ category.name }}</span>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" 
+                                            onclick="editCategory('{{ category.id }}', '{{ category.name }}')"
+                                            data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                                        <i class="bi bi-pencil"></i> 编辑
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            onclick="deleteCategory('{{ category.id }}', '{{ category.name }}')"
+                                            data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
+                                        <i class="bi bi-trash"></i> 删除
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4 text-muted">
+                        <i class="bi bi-bookmark" style="font-size: 2rem;"></i>
+                        <p class="mt-2">还没有任何分类</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加分类模态框 -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="action" value="add">
+                <div class="modal-header">
+                    <h5 class="modal-title">添加分类</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="categoryName" class="form-label">分类名称</label>
+                        <input type="text" class="form-control" id="categoryName" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑分类模态框 -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="id" id="editCategoryId">
+                <div class="modal-header">
+                    <h5 class="modal-title">编辑分类</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editCategoryName" class="form-label">分类名称</label>
+                        <input type="text" class="form-control" id="editCategoryName" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 删除分类模态框 -->
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" id="deleteCategoryId">
+                <div class="modal-header">
+                    <h5 class="modal-title">删除分类</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>确定要删除分类 "<span id="deleteCategoryName"></span>" 吗？</p>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i> 
+                        注意：如果该分类下有文章，将无法删除。
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-danger">删除</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function editCategory(id, name) {
+    document.getElementById('editCategoryId').value = id;
+    document.getElementById('editCategoryName').value = name;
+}
+
+function deleteCategory(id, name) {
+    document.getElementById('deleteCategoryId').value = id;
+    document.getElementById('deleteCategoryName').textContent = name;
+}
+</script>
+{% endblock %}

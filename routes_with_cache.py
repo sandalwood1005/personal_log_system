@@ -1,25 +1,18 @@
 import pymysql
 pymysql.install_as_MySQLdb()
 
-from flask import Blueprint, request, flash, redirect, render_template, url_for, abort
-from models import db, User, Post, Category, Tag, Comment, post_tag
-import json
+from flask import Blueprint, request, flash, redirect, render_template, url_for, abort, jsonify
+from models import db, User, Post, Category, Tag, Comment
 from flask_login import login_user, login_required, logout_user, current_user
+from cache_helper import cache_view, cache_invalidate
 
-# 安全导入Celery任务
-try:
-    from celery_tasks import process_user_registration, update_post_statistics
-    CELERY_AVAILABLE = True
-    print("✅ Celery任务可用")
-except ImportError:
-    CELERY_AVAILABLE = False
-    print("⚠️  Celery不可用，使用同步模式")
 
 # 创建蓝图
 bp = Blueprint('main', __name__) #创建一个名为 main 的蓝图实例
 
 # 路由定义
 @bp.route('/')
+@cache_view(timeout=60)  # 首页缓存60秒
 def index():
     try:
         page = request.args.get('page', 1, type=int)
@@ -72,14 +65,9 @@ def register():
             db.session.add(user)
             db.session.commit()
 
-              # 🎯 关键改进：使用Celery异步处理注册后续
-            if CELERY_AVAILABLE:
-                process_user_registration.delay(user.id)
-                print(f"✅ 异步处理用户注册: {user.username}")
-            else:
-                print(f"⚠️  同步处理用户注册: {user.username}")
-
-            flash('注册成功，请登录', 'success')
+            if request.is_json:
+                return {'message': '注册成功'}, 200
+            flash('注册成功，请登录','success')
             return redirect(url_for('main.login'))
             
         except Exception as e:
@@ -141,11 +129,9 @@ def profile():
 
 
 @bp.route('/post/<int:post_id>')
+@cache_view(timeout=300)  # 文章页缓存5分钟
 def show_post(post_id):
-    # 🎯 异步更新文章统计
-    if CELERY_AVAILABLE:
-        update_post_statistics.delay(post_id)
-
+    post=Post.query.get_or_404(post_id)
     return render_template('post.html',post=post)
 
 @bp.route('/post/<int:post_id>/comment', methods=['POST'])
@@ -166,6 +152,7 @@ def add_comment(post_id):
 
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
+@cache_invalidate('view:index:*')  # 创建文章后清除首页缓存
 def create_post():
     if request.method=='POST':
         if request.is_json:

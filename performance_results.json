@@ -1,0 +1,107 @@
+{
+  "\u9996\u9875": {
+    "total_requests": 10,
+    "concurrency": 3,
+    "successes": 10,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_time": 0.1597142219543457,
+    "requests_per_second": 62.61183179327949,
+    "response_times": {
+      "min": 27.974367141723633,
+      "max": 64.59617614746094,
+      "avg": 45.82679271697998,
+      "p95": 63.53273391723633
+    }
+  },
+  "\u6587\u7ae0\u9875": {
+    "total_requests": 10,
+    "concurrency": 3,
+    "successes": 10,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_time": 0.06767654418945312,
+    "requests_per_second": 147.7616819795953,
+    "response_times": {
+      "min": 9.642601013183594,
+      "max": 30.378341674804688,
+      "avg": 17.095136642456055,
+      "p95": 29.640626907348633
+    }
+  },
+  "\u7528\u6237\u6ce8\u518c\u9875": {
+    "total_requests": 10,
+    "concurrency": 3,
+    "successes": 10,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_time": 0.08739137649536133,
+    "requests_per_second": 114.42776622852247,
+    "response_times": {
+      "min": 10.344505310058594,
+      "max": 35.51936149597168,
+      "avg": 22.020816802978516,
+      "p95": 35.468077659606934
+    }
+  },
+  "\u767b\u5f55\u9875": {
+    "total_requests": 10,
+    "concurrency": 3,
+    "successes": 10,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_time": 0.07923483848571777,
+    "requests_per_second": 126.20711029533453,
+    "response_times": {
+      "min": 14.115095138549805,
+      "max": 30.841827392578125,
+      "avg": 21.496939659118652,
+      "p95": 30.743980407714844
+    }
+  },
+  "\u8d1f\u8f7d\u6d4b\u8bd5_\u4f4e\u8d1f\u8f7d": {
+    "total_requests": 10,
+    "concurrency": 2,
+    "successes": 10,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_time": 0.1503133773803711,
+    "requests_per_second": 66.5276782032167,
+    "response_times": {
+      "min": 26.102781295776367,
+      "max": 32.718658447265625,
+      "avg": 29.08158302307129,
+      "p95": 32.48562812805176
+    }
+  },
+  "\u8d1f\u8f7d\u6d4b\u8bd5_\u4e2d\u8d1f\u8f7d": {
+    "total_requests": 30,
+    "concurrency": 5,
+    "successes": 30,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_time": 0.46346068382263184,
+    "requests_per_second": 64.73040982151814,
+    "response_times": {
+      "min": 32.238006591796875,
+      "max": 115.96131324768066,
+      "avg": 73.74734083811443,
+      "p95": 97.23142385482788
+    }
+  },
+  "\u8d1f\u8f7d\u6d4b\u8bd5_\u9ad8\u8d1f\u8f7d": {
+    "total_requests": 50,
+    "concurrency": 10,
+    "successes": 50,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_time": 0.741600751876831,
+    "requests_per_second": 67.4217223667328,
+    "response_times": {
+      "min": 32.44376182556152,
+      "max": 372.927188873291,
+      "avg": 126.08253479003906,
+      "p95": 252.03071832656855
+    }
+  }
+}
